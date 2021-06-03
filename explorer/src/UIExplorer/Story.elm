@@ -22,12 +22,17 @@ type alias Story a =
     }
 
 
-optionListStory : String -> a -> List ( String, a ) -> Story a
-optionListStory label default options =
-    { info = OptionListStory label <| List.map Tuple.first options
+optionListStory : String -> SelectList ( String, a ) -> Story a
+optionListStory label options =
+    { info =
+        options
+            |> SelectList.toList
+            |> List.map Tuple.first
+            |> OptionListStory label
     , toValue =
         \optLabel ->
             options
+                |> SelectList.toList
                 |> List.foldl
                     (\( key, optvalue ) res ->
                         case ( res, optLabel == key ) of
@@ -41,7 +46,7 @@ optionListStory label default options =
                                 Nothing
                     )
                     Nothing
-                |> Maybe.withDefault default
+                |> Maybe.withDefault (SelectList.selected options |> Tuple.second)
     }
 
 

@@ -5,6 +5,7 @@ import Element.Background as Background
 import Element.Font
 import Material.Icons as MaterialIcons exposing (offline_bolt)
 import Material.Icons.Types exposing (Coloring(..))
+import SelectList
 import StoryTileWithSource
 import String.Interpolate exposing (interpolate)
 import UIExplorer
@@ -48,43 +49,40 @@ book =
          --|> Story.addTile viewButtonSource
         )
         |> Story.addStory
-            (Story.optionListStory "Palette"
-                ( "dark", darkPalette )
-                [ ( "dark", ( "Material.darkPalette", darkPalette ) )
-                , ( "default", ( "Material.defaultPalette", defaultPalette ) )
-                ]
+            (Story.optionListStory "Palette" <|
+                SelectList.fromLists []
+                    ( "dark", ( "Material.darkPalette", darkPalette ) )
+                    [ ( "default", ( "Material.defaultPalette", defaultPalette ) )
+                    ]
             )
         |> Story.addStory
-            (Story.optionListStory "Material button"
-                ( "contained", containedButton )
-                [ ( "contained", ( "Material.containedButton", containedButton ) )
-                , ( "outlined", ( "Material.outlined", outlinedButton ) )
-                , ( "text", ( "Material.textButton", textButton ) )
-                ]
+            (Story.optionListStory "Material button" <|
+                SelectList.fromLists []
+                    ( "contained", ( "Material.containedButton", containedButton ) )
+                    [ ( "outlined", ( "Material.outlined", outlinedButton ) )
+                    , ( "text", ( "Material.textButton", textButton ) )
+                    ]
             )
         |> Story.addStory
             (Story.textStory "Label"
                 "OK"
             )
         |> Story.addStory
-            (Story.optionListStory "Icon"
-                ( "done"
-                , MaterialIcons.done
-                    |> Icon.elmMaterialIcons Color
-                )
-                [ ( "save"
-                  , ( "save"
-                    , MaterialIcons.save
-                        |> Icon.elmMaterialIcons Color
+            (Story.optionListStory "Icon" <|
+                SelectList.fromLists []
+                    ( "save"
+                    , ( "save"
+                      , MaterialIcons.save
+                            |> Icon.elmMaterialIcons Color
+                      )
                     )
-                  )
-                , ( "done"
-                  , ( "done"
-                    , MaterialIcons.done
-                        |> Icon.elmMaterialIcons Color
-                    )
-                  )
-                ]
+                    [ ( "done"
+                      , ( "done"
+                        , MaterialIcons.done
+                            |> Icon.elmMaterialIcons Color
+                        )
+                      )
+                    ]
             )
         |> Story.addStory
             (Story.boolStory "with event handler"
